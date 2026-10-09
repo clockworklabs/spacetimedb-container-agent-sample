@@ -1,0 +1,12 @@
+{
+  "database": "container-agent-demo",
+  "env": {
+    "OPENAI_API_KEY": "",
+    "OPENAI_MODEL": "gpt-4o-mini"
+  },
+  "container": {
+    "build": "./agent",
+    "env-keys": ["OPENAI_API_KEY", "OPENAI_MODEL"],
+    "restart": "on-failure"
+  }
+}
