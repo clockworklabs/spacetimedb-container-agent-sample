@@ -18,6 +18,8 @@ Container Hosting is a prototype, and it needs a prototype build of the `spaceti
 
 ## Install the prototype CLI
 
+**Updated 2026-10-10:** containers now restart when their environment values change. If `spacetime --version` shows a commit other than `3a25729d50`, download the CLI again and restart `spacetime start`.
+
 Pick the archive for your machine:
 
 | Platform | Archive |
@@ -96,12 +98,11 @@ Only the container can complete tasks. `spacetime call complete_task 1 "forged"`
 ```sh
 export OPENAI_API_KEY=sk-...
 spacetime publish
-spacetime container start
 ```
 
-`spacetime publish` stores the key in the database's environment, which passes it to the container. A running container keeps the values it started with, so `spacetime container start` restarts it with the key.
+`spacetime publish` stores the key in the database's environment, which passes it to the container. Since the value changed, the container restarts with the key, and a new `log` row says `agent started (LLM model gpt-4o-mini)`.
 
-Every publish stores the key from your shell, or the empty value if your shell doesn't have one. Keep it exported when you publish, or the container goes back to echo mode the next time it starts. If your shell exports `OPENAI_API_KEY` for other tools, publish with `(unset OPENAI_API_KEY; spacetime publish)` to keep it out. `OPENAI_MODEL` works the same way, and defaults to `gpt-4o-mini`.
+Every publish stores the key from your shell, or the empty value if your shell doesn't have one. Keep it exported when you publish, or the container restarts in echo mode. If your shell exports `OPENAI_API_KEY` for other tools, publish with `(unset OPENAI_API_KEY; spacetime publish)` to keep it out. `OPENAI_MODEL` works the same way, and defaults to `gpt-4o-mini`.
 
 ## Change the code
 
