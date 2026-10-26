@@ -3,7 +3,7 @@
 # since the bundle is plain JavaScript; only the runtime stage is per platform, so no
 # emulation is needed. BuildKit sets BUILDPLATFORM.
 ARG BUILDPLATFORM
-# Node 22.23.4 includes the October security fixes and updated CA roots.
+# Node 22.23.4 distrusts compromised eMudhra/emSign CAs (October 2026).
 FROM --platform=$BUILDPLATFORM node:22.23.4-slim AS build
 WORKDIR /app
 COPY package.json package-lock.json ./
@@ -12,7 +12,7 @@ COPY tsconfig.json ./
 COPY src ./src
 RUN npm run build
 
-# Node 22.23.4 includes the October security fixes and updated CA roots.
+# Node 22.23.4 distrusts compromised eMudhra/emSign CAs (October 2026).
 FROM node:22.23.4-slim
 ENV NODE_ENV=production
 WORKDIR /app
